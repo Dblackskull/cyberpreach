@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 client = MongoClient()
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient('mongodb+srv://codesploit:codesploit@cluster0.xcehq.mongodb.net/test')
 db = client['Cyberpreach']
 collection = db['quiz']
 class question():

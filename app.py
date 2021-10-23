@@ -5,7 +5,7 @@ from pywikihow import search_wikihow
 import contextlib,io,os
 from pymongo import MongoClient
 import pandas as pd
-from data import question
+
 
 
 app = Flask(__name__)
@@ -15,6 +15,13 @@ app.config["MONGO_URI"] = "mongodb+srv://codesploit:codesploit@cluster0.xcehq.mo
 client = MongoClient("mongodb+srv://codesploit:codesploit@cluster0.xcehq.mongodb.net/test")
 dbs = client['Cyberpreach']
 
+class question():
+    def __init__(self,question):
+        self.question=dbs.quiz.find_one({"name":question})
+        self.quiz=[]
+    def fivequestion(self):
+        self.quiz=self.question
+        return self.quiz
 
 @app.route('/',methods=['GET','POST'])
 def index():                                     #index function
@@ -42,7 +49,7 @@ def signup():
         passw=request.form.get("pass")
         cpass=request.form.get("cpass")
         if(passw==cpass):
-            dbs.login.insert_one({"name": name, "email": email, "pass": passw})
+            x=dbs.login.insert_one({"name": name, "email": email, "pass": passw})
         if(x):
             return render_template("login.html")
     return render_template("signup.html")
